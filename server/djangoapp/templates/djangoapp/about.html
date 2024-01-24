@@ -19,9 +19,9 @@
                     <a class="navbar-brand" href="#">About Us</a>
                 </div>
                 <ul class="navbar-brand">
-                    <li><a href='/'>Home</li>
-                    <li><a href="about">About Us</li>
-                    <li><a href="contact">Contact Us</li>
+                    <li><a href="{% url 'djangoapp:index' %}">Home</li>
+                    <li><a href="{% url 'djangoapp:about' %}">About Us</li>
+                    <li><a href="{% url 'djangoapp:contact' %}">Contact Us</li>
                 </ul>
             </div>
         </nav>
