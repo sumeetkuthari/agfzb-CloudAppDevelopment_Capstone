@@ -14,12 +14,7 @@ import json
 logger = logging.getLogger(__name__)
 
 
-# Create your views here.
-
-
 # Create an `about` view to render a static about page
-# def about(request):
-# ...
 def about(request):
     context = {}
     if request.method == "GET":
@@ -34,8 +29,6 @@ def contact(request):
         return render(request, 'djangoapp/contact.html', context)
 
 # Create a `login_request` view to handle sign in request
-# def login_request(request):
-# ...
 def login_request(request):
     context = {}
     if request.method == "POST":
@@ -51,16 +44,12 @@ def login_request(request):
         return render(request, 'djangoapp/index', context)
 
 # Create a `logout_request` view to handle sign out request
-# def logout_request(request):
-# ...
 def logout_request(request):
     print(f"Log out the user: {request.user.username}")
     logout(request)
     return redirect('djangoapp:index')
 
 # Create a `registration_request` view to handle sign up request
-# def registration_request(request):
-# ...
 def registration_request(request):
     context = {}
     if request.method == "GET":
