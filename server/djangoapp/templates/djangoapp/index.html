@@ -47,6 +47,38 @@
             </ul>
         </div>
     </nav>
+    <div class="container mt-4">
+        <h2>Dealership List</h2>
+        {% if dealership_list %}
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Address</th>
+                    <th>Zip</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Short Name</th>
+                    <th>Full Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dealership in dealership_list %}
+                <tr>
+                    <td>{{ dealership.id }}</td>
+                    <td>{{ dealership.city }}</td>
+                    <td>{{ dealership.st }}</td>
+                    <td>{{ dealership.address }}</td>
+                    <td>{{ dealership.zip }}</td>
+                    <td>{{ dealership.latitude }}</td>
+                    <td>{{ dealership.longitude }}</td>
+                    <td>{{ dealership.short_name }}</td>
+                    <td>{{ dealership.full_name }}</td>
+            </tbody>
+        </table>
+    </div>
     <!--Add a dealer table here -->
 
     </body>
