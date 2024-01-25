@@ -86,7 +86,8 @@ def get_dealerships(request):
         context['dealership_list'] = dealer_names
         # Return a list of dealer short name
         return HttpResponse(dealer_names)
-        #return render(request, 'djangoapp/index', context)
+        return render(request, 'djangoapp/index.html', context)
+        
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
 # def get_dealer_details(request, dealer_id):
