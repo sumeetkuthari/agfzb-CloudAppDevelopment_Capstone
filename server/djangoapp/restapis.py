@@ -3,21 +3,36 @@ import json
 # import related models here
 from .models import CarDealer, DealerReview
 from requests.auth import HTTPBasicAuth
+from ibm_watson import NaturalLanguageUnderstandingV1
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+from ibm_watson.natural_language_understanding_v1 import Features, EntitiesOptions, SentimentOptions
 
 
 # Create a `get_request` to make HTTP GET requests
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
 #                                     auth=HTTPBasicAuth('apikey', api_key))
 def get_request(url, **kwargs):
-    print(kwargs)
+    
+    # If argument contain API KEY
+    api_key = kwargs.get("api_key")
     print("GET from {} ".format(url))
     try:
-        # Call get method of requests library with URL and parameters
-        response = requests.get(url, headers={'Content-Type': 'application/json'},
+        if api_key:
+            params = dict()
+            params["text"] = kwargs["text"]
+            params["version"] = kwargs["version"]
+            params["features"] = kwargs["features"]
+            params["return_analyzed_text"] = kwargs["return_analyzed_text"]
+            response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
+                                    auth=HTTPBasicAuth('apikey', api_key))
+        else:
+            # Call get method of requests library with URL and parameters
+            response = requests.get(url, headers={'Content-Type': 'application/json'},
                                     params=kwargs)
     except:
         # If any error occurs
         print("Network exception occurred")
+
     status_code = response.status_code
     print("With status {} ".format(status_code))
     json_data = json.loads(response.text)
@@ -75,8 +90,8 @@ def get_dealer_reviews_from_cf(url, dealer_id, **kwargs):
             # Get its content in `doc` object
             review_doc = review
             # Create a DealerReview object with values in `doc` object
-            #sentiment = analyze_review_sentiments(review['review'])
-            sentiment = 'neutral'
+            sentiment = analyze_review_sentiments(review['review'])
+            #sentiment = 'neutral'
             review_obj = DealerReview(id=review_doc["id"],name=review_doc["name"],dealership=review_doc["dealership"],
                                     review=review_doc["review"],purchase=review_doc["purchase"],
                                     purchase_date=review_doc["purchase_date"],car_make=review_doc["car_make"],
@@ -90,6 +105,15 @@ def get_dealer_reviews_from_cf(url, dealer_id, **kwargs):
 # def analyze_review_sentiments(text):
 # - Call get_request() with specified arguments
 # - Get the returned sentiment label such as Positive or Negative
-
-
+def analyze_review_sentiments(text):
+    url = "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/ff361456-255b-4008-9234-5cca1de4c519"
+    api_key = "ZnM34eLHoZ0dRclGuc_u_maw5O1AwplNtXpjl_myuvge"
+    authenticator = IAMAuthenticator(api_key)
+    natural_language_understanding = NaturalLanguageUnderstandingV1(version='2021-08-01',authenticator=authenticator)
+    natural_language_understanding.set_service_url(url)
+    response = natural_language_understanding.analyze( text=text+"hello hello hello",features=Features(sentiment=SentimentOptions(targets=[text+"hello hello hello"]))).get_result()
+    label=json.dumps(response, indent=2)
+    label = response['sentiment']['document']['label']
+    print(f"Sentiment analysis is: {label}")
+    return(label)
 
