@@ -85,9 +85,9 @@ def get_dealerships(request):
         dealerships = get_dealers_from_cf(url)
         # Concat all dealer's short name
         dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
-        context['dealership_list'] = dealer_names
+        context['dealership_list'] = dealerships
         # Return a list of dealer short name
-        return HttpResponse(dealer_names)
+        #return HttpResponse(dealer_names)
         return render(request, 'djangoapp/index.html', context)
         
 
