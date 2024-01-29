@@ -97,9 +97,13 @@ def get_dealerships(request):
 def get_dealer_details(request, dealer_id):
     context = {}
     if request.method == "GET":
-        url = "https://sumeetkuthar-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews?id=" + str(dealer_id)
-        reviews = get_dealer_reviews_from_cf(url, dealer_id)
-        context["reviews"] = reviews        
+        """dealer_url = "https://sumeetkuthar-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealership/get"
+        dealer = get_dealer_by_id_from_cf(dealer_url, dealer_id)
+        #print(f"Dealer is: {dealer}")
+        #context["dealer"] = dealer"""
+        review_url = "https://sumeetkuthar-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews?id=" + str(dealer_id)
+        reviews = get_dealer_reviews_from_cf(review_url, dealer_id)
+        context["reviews"] = reviews
         print(f"Reviews list is: {reviews}")
         #return HttpResponse(reviews)
         return render(request, 'djangoapp/dealer_details.html', context)

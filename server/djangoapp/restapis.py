@@ -83,7 +83,7 @@ def get_dealer_by_id_from_cf(url, id):
     context = {}
     results = []
     # Call get_request with a URL parameter
-    json_result = get_request(url, dealerId=id)
+    json_result = get_request(url, dealer_id=id)
     if json_result:
         dealers = json_result
         # Get the row list in JSON as dealers
