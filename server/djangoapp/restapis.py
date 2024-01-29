@@ -81,19 +81,17 @@ def get_dealers_from_cf(url, **kwargs):
 
 def get_dealer_by_id_from_cf(url, id):
     
-    result = []
     print("In get_dealer_by_id_from_cf")
     #mod_url = url + f"?id={str(id)}"
-    json_result = get_request(url)
+    json_result = get_request(url, dealerId=id)
     print(f"Json result is: {json_result}")
     if json_result:
         dealers = json_result
-        dealer_doc = dealers[id-1]
+        dealer_doc = dealers[0]
         dealer_obj = CarDealer(address=dealer_doc["address"], city=dealer_doc["city"],
                                 id=dealer_doc["id"], lat=dealer_doc["lat"], long=dealer_doc["long"], short_name=dealer_doc["short_name"], 
                                 full_name=dealer_doc["full_name"], st=dealer_doc["st"], zip=dealer_doc["zip"])
-        result.append(dealer_obj)
-    return result
+    return dealer_obj
 
 # Create a get_dealer_reviews_from_cf method to get reviews by dealer id from a cloud function
 # def get_dealer_reviews_from_cf(url, dealer_id):
@@ -104,6 +102,8 @@ def get_dealer_reviews_from_cf(url, dealer_id, **kwargs):
     results = []
     # Call get_request with a URL parameter
     json_result = get_request(url, dealerId=dealer_id)
+    print(f"In get_dealer_reviews")
+    print(f"json_result is: {json_result}")
     if json_result:
         # Get the row list in JSON as reviews
         reviews = json_result
@@ -112,7 +112,7 @@ def get_dealer_reviews_from_cf(url, dealer_id, **kwargs):
             # Get its content in `doc` object
             review_doc = review
             # Create a DealerReview object with values in `doc` object
-            sentiment = analyze_review_sentiments(review['review'])
+            sentiment = analyze_review_sentiments(review_doc["review"])
             #sentiment = 'neutral'
             review_obj = DealerReview(id=review_doc["id"],name=review_doc["name"],dealership=review_doc["dealership"],
                                     review=review_doc["review"],purchase=review_doc["purchase"],

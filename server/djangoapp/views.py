@@ -97,11 +97,11 @@ def get_dealerships(request):
 def get_dealer_details(request, dealer_id):
     context = {}
     if request.method == "GET":
-        dealer_url = f"https://sumeetkuthar-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
+        dealer_url = f"https://sumeetkuthar-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get?id={str(dealer_id)}"
         dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
         print(f"Dealer is: {dealer}")
         context["dealer"] = dealer
-        review_url = f"https://sumeetkuthar-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews"
+        review_url = f"https://sumeetkuthar-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews?id={str(dealer_id)}"
         
         reviews = get_dealer_reviews_from_cf(review_url, dealer_id)
         context["reviews"] = reviews
