@@ -82,11 +82,11 @@ def get_dealers_from_cf(url, **kwargs):
 def get_dealer_by_id_from_cf(url, id):
     
     print("In get_dealer_by_id_from_cf")
-    json_result = get_request(url, id=id)
+    mod_url = url + f"?id={str(id)}"
+    json_result = get_request(mod_url)
     print(f"Json result is: {json_result}")
     if json_result:
         dealers = json_result
-        
         dealer_doc = dealers[0]
         dealer_obj = CarDealer(address=dealer_doc["address"], city=dealer_doc["city"],
                                 id=dealer_doc["id"], lat=dealer_doc["lat"], long=dealer_doc["long"], short_name=dealer_doc["short_name"], 
