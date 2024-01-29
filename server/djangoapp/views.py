@@ -138,4 +138,4 @@ def add_review(request, dealer_id):
             new_payload["review"] = payload
             post_url = "https://sumeetkuthar-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/add_review"
             post_request(post_url, json_payload=new_payload, id=dealer_id)
-            return redirect("djangoapp:dealer_details", dealer_id=dealer_id)
+            return redirect("djangoapp:add_review", dealer_id=dealer_id)
