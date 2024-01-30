@@ -131,7 +131,7 @@ def add_review(request, dealer_id):
             payload = dict()
             car_id = request.POST['car']
             car = CarModel.objects.get(id=car_id)
-            payload["time"] = datetime.utcnow().isoformat()
+            #payload["time"] = datetime.utcnow().isoformat()
             payload["name"] = username
             payload["dealership"] = dealer_id
             payload["review"] = request.POST['content']
@@ -143,9 +143,12 @@ def add_review(request, dealer_id):
             payload["car_model"] = car.name
             payload["car_make"] = car.car_make.name
             payload["car_year"] = int(car.year.strftime("%Y"))
+            payload["another"] = "field"
+            payload["id"] = dealer_id
+            #payload["id"] = dealer_id
             new_payload = {}
-            new_payload["review"] = payload
+            new_payload = payload
             print(f"New payload is: {new_payload}")
-            post_url = "https://sumeetkuthar-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/add_review"
+            post_url = "https://sumeetkuthar-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/post_review"
             post_request(post_url, json_payload=new_payload, id=dealer_id)
             return redirect("djangoapp:dealer_details", dealer_id=dealer_id)
