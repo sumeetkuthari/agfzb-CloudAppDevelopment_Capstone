@@ -60,8 +60,12 @@
             </select>
             <label for="purchasedate"><b>Purchase Date:</b></label>
             <input class="date-own form-control" type="text" name="purchasedate" id="purchasedate">
-        </form>
-        <button type="submit" class="btn btn-primary">Submit</button>
+            <div>
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            </form>
+        
     </div>
     </body>
     <script type="text/javascript">
